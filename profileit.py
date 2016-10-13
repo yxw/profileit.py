@@ -1,5 +1,8 @@
 from functools import wraps
 import cProfile, pstats, StringIO
+import logging
+
+logger = logging.getLogger(__name__)
 
 def profileit(func):
     @wraps(func)
@@ -11,6 +14,6 @@ def profileit(func):
         ps = pstats.Stats(prof, stream=s).sort_stats('cumtime')
         #ps.print_stats(.25)
         ps.print_stats(100)
-        log.info("profileit: %s", s.getvalue())
+        logger.info("profileit: %s", s.getvalue())
         return retval
     return wrapper
